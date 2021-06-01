@@ -1,0 +1,16 @@
+﻿using 
+
+@{
+    AllLanguages language = new AllLanguages();
+    CountryCodes countryCodes = new CountryCodes();
+    List<string> response = await language.GetResponse();
+}
+
+<p>List of available languages:</p>
+<select name="dowList" id="dowList">
+    @foreach (var item in response)
+    {
+        string fullName = countryCodes.GetFullCountryName(item);
+        <option value="@item">@item - @fullName</option>
+    }
+</select>

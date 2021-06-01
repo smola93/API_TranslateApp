@@ -1,0 +1,11 @@
+﻿
+@model API_TranslateApp.Models.TranslateModel
+@{
+    ViewData["Title"] = "Translate Using Google Translate API";
+}
+<h1>@ViewData["Title"]</h1>
+@using (Html.BeginForm("GetTranslation", "Translate", FormMethod.Post))
+{
+    @Html.TextBoxFor(model => model.text)
+    <button type="submit">Translate!</button>
+}
