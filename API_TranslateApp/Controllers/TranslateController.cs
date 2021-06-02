@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using API_TranslateApp.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +17,12 @@ namespace API_TranslateApp.Controllers
         {
             return View();
         }
-        public string GetTranslation()
+        
+        [HttpPost]
+        public ActionResult GetTranslation(TranslateModel model)
         {
-            return "GetTranslation method invoked!";
+            string text = model.text;
+            return View("Translate", model);
         }
 
         
