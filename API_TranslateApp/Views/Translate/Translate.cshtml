@@ -2,10 +2,26 @@
 @model API_TranslateApp.Models.TranslateModel
 @{
     ViewData["Title"] = "Translate Using Google Translate API";
+    AllLanguages language = new AllLanguages();
+    CountryCodes countryCodes = new CountryCodes();
+    //List<string> response = await language.GetResponse();
+    string[] countries = { "pl", "en",
+                        "ru" };
+    List<string> response = new List<string>(); ;
+    response.AddRange(countries);
 }
 <h1>@ViewData["Title"]</h1>
-@using (Html.BeginForm("GetTranslation", "Translate", FormMethod.Post))
-{
-    @Html.TextBoxFor(model => model.text)
-    <button type="submit">Translate!</button>
-}
+<div class="translate">
+    <select name="dowList" id="dowList" class="dowList">
+        @foreach (var item in response)
+        {
+            string fullName = countryCodes.GetFullCountryName(item);
+            <option value="@item">@item - @fullName</option>
+        }
+    </select>
+    @using (Html.BeginForm("GetTranslation", "Translate", FormMethod.Post))
+    {
+        @Html.TextBoxFor(model => model.text, new { Class = "textbox" })
+        <button type="submit" class="btn-translate">Translate!</button>
+    }
+</div>
