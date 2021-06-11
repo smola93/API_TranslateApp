@@ -11,17 +11,32 @@
     response.AddRange(countries);
 }
 <h1>@ViewData["Title"]</h1>
-<div class="translate">
-    <select name="dowList" id="dowList" class="dowList">
-        @foreach (var item in response)
-        {
-            string fullName = countryCodes.GetFullCountryName(item);
-            <option value="@item">@item - @fullName</option>
-        }
-    </select>
-    @using (Html.BeginForm("GetTranslation", "Translate", FormMethod.Post))
-    {
-        @Html.TextBoxFor(model => model.text, new { Class = "textbox" })
-        <button type="submit" class="btn-translate">Translate!</button>
-    }
-</div>
+    <div class="translate-container">
+        <div class="translate text-center">
+            <select name="dowList" id="dowList" class="dowList">
+                @foreach (var item in response)
+                {
+                    string fullName = countryCodes.GetFullCountryName(item);
+                    <option value="@item">@item - @fullName</option>
+                }
+            </select>
+            @using (Html.BeginForm("GetTranslation", "Translate", FormMethod.Post))
+            {
+                @Html.TextBoxFor(model => model.text, new { Class = "textbox" })
+                <button type="submit" class="btn-translate">Translate!</button>
+            }
+        </div>
+        <div class="translate">
+            <select name="dowList" id="dowList" class="dowList">
+                @foreach (var item in response)
+                {
+                    string fullName = countryCodes.GetFullCountryName(item);
+                    <option value="@item">@item - @fullName</option>
+                }
+            </select>
+            @using (Html.BeginForm("GetTranslation", "Translate", FormMethod.Post))
+            {
+                @Html.TextBoxFor(model => model.response, new { Class = "textbox" })
+            }
+        </div>
+    </div>
