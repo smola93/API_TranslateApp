@@ -12,11 +12,10 @@ using System.Collections.ObjectModel;
 
 namespace API_TranslateApp
 {
-    public class AllLanguages
+    public class ApiController
     {
-        /*
-        protected static readonly HttpClient client = new HttpClient();
-        public async Task<List<string>> GetResponse()
+        private static readonly HttpClient client = new HttpClient();
+        public async Task<List<string>> GetAllLanguages()
         {
 
             try
@@ -59,6 +58,39 @@ namespace API_TranslateApp
 
         }
 
+        public async Task<string> GetApiTranslation(string message/*, string target, string source*/)
+        {
+            try
+            {
+                var request = new HttpRequestMessage
+                {
+                    Method = HttpMethod.Post,
+                    RequestUri = new Uri("https://google-translate1.p.rapidapi.com/language/translate/v2"),
+                    Headers =
+    {
+        { "x-rapidapi-key", "f36cc37f00msh60980c9dd08911bp1635d4jsnbb12aedaf508" },
+        { "x-rapidapi-host", "google-translate1.p.rapidapi.com" },
+    },
+                    Content = new FormUrlEncodedContent(new Dictionary<string, string>
+    {
+        { "q", message },
+        { "target", "es" },
+        { "source", "en" },
+    }),
+                };
+                HttpResponseMessage response = await client.SendAsync(request);
+                response.EnsureSuccessStatusCode();
+                var content = await response.Content.ReadAsStringAsync();
+                Console.WriteLine(content);
+
+                return content;
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+
+            }
+        }
     }
 
     public class Data
@@ -76,6 +108,5 @@ namespace API_TranslateApp
     {
         [JsonProperty("language")]
         public string language { get; set; }
-         */
     }
 }

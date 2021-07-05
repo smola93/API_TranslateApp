@@ -1,8 +1,8 @@
 ﻿
 @{
-    AllLanguages language = new AllLanguages();
+    ApiController language = new ApiController();
     CountryCodes countryCodes = new CountryCodes();
-    List<string> response = await language.GetResponse();
+    List<string> response = await language.GetAllLanguages();
 }
 
 <p>List of available languages:</p>
