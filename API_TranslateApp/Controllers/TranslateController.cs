@@ -24,7 +24,7 @@ namespace API_TranslateApp.Controllers
         {
             string text = model.text;
             ApiController apiController = new ApiController();
-            string res = await apiController.GetApiTranslation(text);
+            model.response = await apiController.GetApiTranslation(text, "pl", "en");
             return View("Translate", model);
         }
 

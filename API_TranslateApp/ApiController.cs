@@ -35,7 +35,7 @@ namespace API_TranslateApp
                 response.EnsureSuccessStatusCode();
                 var content = await response.Content.ReadAsStringAsync();
                 Console.WriteLine(content);
-                Data result = JsonConvert.DeserializeObject<Data>(content);
+                AllLanguagesData result = JsonConvert.DeserializeObject<AllLanguagesData>(content);
 
                 List<Language> listOfCountryCodesObj = result.languages.language;
                 List<string> listOfCountryCodes = new List<string>();
@@ -58,7 +58,7 @@ namespace API_TranslateApp
 
         }
 
-        public async Task<string> GetApiTranslation(string message/*, string target, string source*/)
+        public async Task<string> GetApiTranslation(string message, string target, string source)
         {
             try
             {
@@ -74,14 +74,17 @@ namespace API_TranslateApp
                     Content = new FormUrlEncodedContent(new Dictionary<string, string>
     {
         { "q", message },
-        { "target", "es" },
-        { "source", "en" },
+        { "target", target },
+        { "source", source },
     }),
                 };
                 HttpResponseMessage response = await client.SendAsync(request);
                 response.EnsureSuccessStatusCode();
                 var content = await response.Content.ReadAsStringAsync();
                 Console.WriteLine(content);
+                TranslationData result = JsonConvert.DeserializeObject<TranslationData>(content);
+                List<TranslatedText> translation = result.translations.translatedTexts;
+                content = translation[0].translatedText;
 
                 return content;
             }
@@ -93,12 +96,11 @@ namespace API_TranslateApp
         }
     }
 
-    public class Data
+    public class AllLanguagesData
     {
         [JsonProperty("data")]
         public Languages languages { get; set; }
     }
-
     public class Languages
     {
         [JsonProperty("languages")]
@@ -108,5 +110,21 @@ namespace API_TranslateApp
     {
         [JsonProperty("language")]
         public string language { get; set; }
+    }
+
+    public class TranslationData
+    {
+        [JsonProperty("data")]
+        public Translations translations { get; set; }
+    }
+    public class Translations
+    {
+        [JsonProperty("translations")]
+        public List<TranslatedText> translatedTexts { get; set; }
+    }
+    public class TranslatedText
+    {
+        [JsonProperty("translatedText")]
+        public string translatedText { get; set; }
     }
 }
