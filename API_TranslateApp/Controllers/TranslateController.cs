@@ -23,8 +23,10 @@ namespace API_TranslateApp.Controllers
         public async Task<ActionResult> GetTranslationAsync(TranslateModel model)
         {
             string text = model.text;
+            model.source = Request.Form["source"].ToString();
+            model.result = Request.Form["result"].ToString();
             ApiController apiController = new ApiController();
-            model.response = await apiController.GetApiTranslation(text, "pl", "en");
+            model.response = await apiController.GetApiTranslation(text, model.result, model.source);
             return View("Translate", model);
         }
 

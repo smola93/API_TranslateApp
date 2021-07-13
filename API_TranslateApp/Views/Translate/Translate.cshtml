@@ -1,5 +1,4 @@
-﻿
-@model API_TranslateApp.Models.TranslateModel
+﻿@model API_TranslateApp.Models.TranslateModel
 @{
     ViewData["Title"] = "Translate Using Google Translate API";
     AllLanguages language = new AllLanguages();
@@ -11,9 +10,11 @@
     response.AddRange(countries);
 }
 <h1>@ViewData["Title"]</h1>
+@using (Html.BeginForm("GetTranslation", "Translate", FormMethod.Post))
+{
     <div class="translate-container">
         <div class="translate text-center">
-            <select name="dowList" id="dowList" class="dowList">
+            <select name="source" id="dowList" class="dowList">
                 @foreach (var item in response)
                 {
                     string fullName = countryCodes.GetFullCountryName(item);
@@ -25,9 +26,9 @@
                 @Html.TextBoxFor(model => model.text, new { Class = "textbox" })
                 <button type="submit" class="btn-translate">Translate!</button>
             }
-        </div>
+            </div>
         <div class="translate">
-            <select name="dowList" id="dowList" class="dowList">
+            <select name="result" id="dowList" class="dowList">
                 @foreach (var item in response)
                 {
                     string fullName = countryCodes.GetFullCountryName(item);
@@ -38,5 +39,6 @@
             {
                 @Html.TextBoxFor(model => model.response, new { Class = "textbox" })
             }
-        </div>
+            </div>
     </div>
+}
