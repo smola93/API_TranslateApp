@@ -18,6 +18,10 @@ namespace API_TranslateApp.Controllers
         {
             return View();
         }
+        public IActionResult Detect()
+        {
+            return View();
+        }
         
         [HttpPost]
         public async Task<ActionResult> GetTranslationAsync(TranslateModel model)
@@ -30,6 +34,14 @@ namespace API_TranslateApp.Controllers
             return View("Translate", model);
         }
 
-        
+        [HttpPost]
+        public async Task<ActionResult> DetectAsync(TranslateModel model)
+        {
+            string text = model.text;
+            ApiController apiController = new ApiController();
+            model.response = await apiController.DetectLanguage(text);
+            return View("Detect", model);
+        }
+
     }
 }

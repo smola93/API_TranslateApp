@@ -15,6 +15,7 @@
     <div class="translate-container">
         <div class="translate text-center">
             <select name="source" id="dowList" class="dowList">
+                <option value="" selected disabled hidden>Translate from...</option>
                 @foreach (var item in response)
                 {
                     string fullName = countryCodes.GetFullCountryName(item);
@@ -29,6 +30,7 @@
             </div>
         <div class="translate">
             <select name="result" id="dowList" class="dowList">
+                <option value="" selected disabled hidden>Translate to...</option>
                 @foreach (var item in response)
                 {
                     string fullName = countryCodes.GetFullCountryName(item);

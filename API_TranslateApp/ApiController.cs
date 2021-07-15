@@ -88,10 +88,45 @@ namespace API_TranslateApp
 
                 return content;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                return "ops! something went wrong.\n\n " + ex.Message;
                 throw new Exception();
+            }
+        }
 
+        public async Task<string> DetectLanguage(string message)
+        {
+            try
+            {
+                var request = new HttpRequestMessage
+                {
+                    Method = HttpMethod.Post,
+                    RequestUri = new Uri("https://google-translate1.p.rapidapi.com/language/translate/v2/detect"),
+                    Headers =
+    {
+        { "x-rapidapi-key", "f36cc37f00msh60980c9dd08911bp1635d4jsnbb12aedaf508" },
+        { "x-rapidapi-host", "google-translate1.p.rapidapi.com" },
+    },
+                    Content = new FormUrlEncodedContent(new Dictionary<string, string>
+    {
+        { "q", "English is hard, but detectably so" },
+    }),
+                };
+                HttpResponseMessage response = await client.SendAsync(request);
+                response.EnsureSuccessStatusCode();
+                var content = await response.Content.ReadAsStringAsync();
+                Console.WriteLine(content);
+                //TranslationData result = JsonConvert.DeserializeObject<TranslationData>(content);
+                //List<TranslatedText> translation = result.translations.translatedTexts;
+                //content = translation[0].translatedText;
+
+                return content;
+            }
+            catch (Exception ex)
+            {
+                return "ops! something went wrong.\n\n " + ex.Message;
+                throw new Exception();
             }
         }
     }

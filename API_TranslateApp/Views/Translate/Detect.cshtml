@@ -1,0 +1,18 @@
+﻿@model API_TranslateApp.Models.TranslateModel
+@{
+    ViewData["Title"] = "Detect Language";
+}
+<h1>@ViewData["Title"]</h1>
+@using (Html.BeginForm("GetTranslation", "Translate", FormMethod.Post))
+{
+    <div class="detect-container">
+        <div class="translate">
+           
+            @using (Html.BeginForm("Detect", "Translate", FormMethod.Post))
+            {
+                @Html.TextBoxFor(model => model.text, new { Class = "textbox" })
+                <button type="submit" class="btn-translate">Check!</button>
+            }
+        </div>
+    </div>
+}
