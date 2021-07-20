@@ -15,7 +15,7 @@
     <div class="translate-container">
         <div class="translate text-center">
             <select name="source" id="dowList" class="dowList">
-                <option value="" selected disabled hidden>Translate from...</option>
+                <option value="" selected disabled hidden>@Html.DisplayFor(model => model.source)</option>
                 @foreach (var item in response)
                 {
                     string fullName = countryCodes.GetFullCountryName(item);
@@ -24,13 +24,13 @@
             </select>
             @using (Html.BeginForm("GetTranslation", "Translate", FormMethod.Post))
             {
-                @Html.TextBoxFor(model => model.text, new { Class = "textbox" })
+                @Html.TextAreaFor(model => model.text, new { Class = "textbox" })
                 <button type="submit" class="btn-translate">Translate!</button>
             }
             </div>
         <div class="translate">
             <select name="result" id="dowList" class="dowList">
-                <option value="" selected disabled hidden>Translate to...</option>
+                <option value="" selected disabled hidden>@Html.DisplayFor(model => model.result)</option>
                 @foreach (var item in response)
                 {
                     string fullName = countryCodes.GetFullCountryName(item);
@@ -39,7 +39,7 @@
             </select>
             @using (Html.BeginForm("GetTranslation", "Translate", FormMethod.Post))
             {
-                @Html.TextBoxFor(model => model.response, new { Class = "textbox" })
+                @Html.TextAreaFor(model => model.response, new { Class = "textbox" })
             }
             </div>
     </div>

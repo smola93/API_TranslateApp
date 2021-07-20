@@ -12,7 +12,7 @@ namespace API_TranslateApp.Controllers
     {
         public IActionResult Translate()
         {
-            return View();
+            return View(new TranslateModel());
         }
         public IActionResult Languages()
         {
@@ -41,6 +41,23 @@ namespace API_TranslateApp.Controllers
             ApiController apiController = new ApiController();
             model.response = await apiController.DetectLanguage(text);
             return View("Detect", model);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> PassDropdownValue(TranslateModel model, string command)
+        {
+            CountryCodes countryCodes = new CountryCodes();
+            string code = Request.Form["dowList"].ToString();
+            string country = countryCodes.GetFullCountryName(code);
+            if (command.Equals("source"))
+            {
+                model.source = code + " - " + country;
+            }
+            else
+            {
+                model.result = code + " - " + country;
+            }
+            return View("Translate", model);
         }
 
     }

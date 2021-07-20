@@ -90,7 +90,7 @@ namespace API_TranslateApp
             }
             catch (Exception ex)
             {
-                return "ops! something went wrong.\n\n " + ex.Message;
+                return "ops! something went wrong.\n" + ex.Message;
                 throw new Exception();
             }
         }
@@ -110,7 +110,7 @@ namespace API_TranslateApp
     },
                     Content = new FormUrlEncodedContent(new Dictionary<string, string>
     {
-        { "q", "English is hard, but detectably so" },
+        { "q", message },
     }),
                 };
                 HttpResponseMessage response = await client.SendAsync(request);
@@ -125,7 +125,7 @@ namespace API_TranslateApp
             }
             catch (Exception ex)
             {
-                return "ops! something went wrong.\n\n " + ex.Message;
+                return "ops! something went wrong.\n" + ex.Message;
                 throw new Exception();
             }
         }

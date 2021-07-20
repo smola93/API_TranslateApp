@@ -94,6 +94,8 @@ body {
 .textbox {
     display: flex;
     justify-content: flex-start;
+    inline-size: 400px;
+    overflow-wrap: normal;
     width: 400px;
     height: 200px;
 }

@@ -2,14 +2,26 @@
 @{
     ApiController language = new ApiController();
     CountryCodes countryCodes = new CountryCodes();
-    List<string> response = await language.GetAllLanguages();
+    //List<string> response = await language.GetAllLanguages();
+    //toDelete
+    string[] countries = { "pl", "en",
+                        "ru" };
+    List<string> response = new List<string>(); ;
+    response.AddRange(countries);
+    //toDelete
 }
 
 <p>List of available languages:</p>
-<select name="dowList" id="dowList">
-    @foreach (var item in response)
-    {
-        string fullName = countryCodes.GetFullCountryName(item);
-        <option value="@item">@item - @fullName</option>
-    }
-</select>
+@using (Html.BeginForm("PassDropdownValue", "Translate", FormMethod.Post))
+{
+    <select name="dowList" id="dowList">
+        @foreach (var item in response)
+        {
+            string fullName = countryCodes.GetFullCountryName(item);
+            <option value="@item">@item - @fullName</option>
+        }
+    </select>
+
+    <button name="command" type="submit" value="source">Translate from that language!</button>
+    <button name="command" type="submit" value="result">Translate to that language!</button>
+}
