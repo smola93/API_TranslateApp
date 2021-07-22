@@ -5,11 +5,14 @@
 <h1>@ViewData["Title"]</h1>
     <div class="detect-container">
         <div class="translate">
-           
+
             @using (Html.BeginForm("Detect", "Translate", FormMethod.Post))
             {
                 @Html.TextAreaFor(model => model.text, new { Class = "textbox" })
+                <p>@Html.DisplayFor(model => model.detectResult)</p>
                 <button type="submit" class="btn-translate">Check!</button>
+                <button type="button" onclick="location.href='@Url.Action("Menu", "Home")'">Go back to menu!</button>
+                
             }
         </div>
     </div>

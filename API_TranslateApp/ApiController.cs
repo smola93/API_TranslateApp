@@ -95,7 +95,7 @@ namespace API_TranslateApp
             }
         }
 
-        public async Task<string> DetectLanguage(string message)
+        public async Task<List<string>> DetectLanguage(string message)
         {
             try
             {
@@ -117,15 +117,17 @@ namespace API_TranslateApp
                 response.EnsureSuccessStatusCode();
                 var content = await response.Content.ReadAsStringAsync();
                 Console.WriteLine(content);
-                //TranslationData result = JsonConvert.DeserializeObject<TranslationData>(content);
-                //List<TranslatedText> translation = result.translations.translatedTexts;
-                //content = translation[0].translatedText;
+                DetectionData result = JsonConvert.DeserializeObject<DetectionData>(content);
+                List<DetectionNodes> detectionNodes = result.detections.detectionList[0];
+                List<string> resultList = new List<string>();
+                resultList.Add(detectionNodes[0].language);
+                resultList.Add(detectionNodes[0].confidence.ToString());
 
-                return content;
+                return resultList;
             }
             catch (Exception ex)
             {
-                return "ops! something went wrong.\n" + ex.Message;
+                //return "ops! something went wrong.\n" + ex.Message;
                 throw new Exception();
             }
         }
@@ -161,5 +163,23 @@ namespace API_TranslateApp
     {
         [JsonProperty("translatedText")]
         public string translatedText { get; set; }
+    }
+    
+    
+    public class DetectionData
+    {
+        [JsonProperty("data")]
+        public Detections detections { get; set; }
+    }
+    public class Detections
+    {
+        [JsonProperty("detections")]
+        public List<List<DetectionNodes>> detectionList { get; set; }
+    }
+    public class DetectionNodes
+    {
+        public bool isReliable { get; set; }
+        public int confidence { get; set; }
+        public string language { get; set; }
     }
 }

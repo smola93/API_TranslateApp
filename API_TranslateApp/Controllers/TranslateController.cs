@@ -26,20 +26,28 @@ namespace API_TranslateApp.Controllers
         [HttpPost]
         public async Task<ActionResult> GetTranslationAsync(TranslateModel model)
         {
+            CountryCodes countryCodes = new CountryCodes();
             string text = model.text;
             model.source = Request.Form["source"].ToString();
+            string sourceCountry = countryCodes.GetFullCountryName(model.source);
             model.result = Request.Form["result"].ToString();
+            string resultCountry = countryCodes.GetFullCountryName(model.result);
             ApiController apiController = new ApiController();
             model.response = await apiController.GetApiTranslation(text, model.result, model.source);
+            model.source += " - " + sourceCountry;
+            model.result += " - " + resultCountry;
             return View("Translate", model);
         }
 
         [HttpPost]
         public async Task<ActionResult> DetectAsync(TranslateModel model)
         {
+            CountryCodes countryCodes = new CountryCodes();
+            List<string> resultArray;
             string text = model.text;
             ApiController apiController = new ApiController();
-            model.response = await apiController.DetectLanguage(text);
+            resultArray = await apiController.DetectLanguage(text);
+            model.detectResult = "Detected language: " + countryCodes.GetFullCountryName(resultArray[0]) + ", Confidence: " + resultArray[1];
             return View("Detect", model);
         }
 

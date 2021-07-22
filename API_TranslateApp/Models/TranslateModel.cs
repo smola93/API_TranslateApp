@@ -14,6 +14,7 @@ namespace API_TranslateApp.Models
         public string response { get; set; }
         public string source { get; set; }
         public string result { get; set; }
+        public string detectResult { get; set; }
 
         public TranslateModel() 
         { 
