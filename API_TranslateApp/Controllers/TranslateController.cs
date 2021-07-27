@@ -24,7 +24,7 @@ namespace API_TranslateApp.Controllers
         }
         
         [HttpPost]
-        public async Task<ActionResult> GetTranslationAsync(TranslateModel model)
+        public async Task<ActionResult> GetTranslation(TranslateModel model)
         {
             CountryCodes countryCodes = new CountryCodes();
             string text = model.text;

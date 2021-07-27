@@ -1,9 +1,9 @@
 ﻿@model API_TranslateApp.Models.TranslateModel
 @{
     ViewData["Title"] = "Translate Using Google Translate API";
-    AllLanguages language = new AllLanguages();
+    ApiController controller = new ApiController();
     CountryCodes countryCodes = new CountryCodes();
-    //List<string> response = await language.GetResponse();
+    //List<string> response = await controller.GetAllLanguages();
     string[] countries = { "pl", "en",
                         "ru" };
     List<string> response = new List<string>(); ;
