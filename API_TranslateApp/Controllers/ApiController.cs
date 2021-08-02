@@ -125,10 +125,9 @@ namespace API_TranslateApp
 
                 return resultList;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                //return "ops! something went wrong.\n" + ex.Message;
-                throw new Exception();
+                throw;
             }
         }
     }

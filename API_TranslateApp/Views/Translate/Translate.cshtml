@@ -6,41 +6,35 @@
     //List<string> response = await controller.GetAllLanguages();
     string[] countries = { "pl", "en",
                         "ru" };
-    List<string> response = new List<string>(); ;
+    List<string> response = new List<string>();
     response.AddRange(countries);
+    SelectList list = new SelectList(response);
+    foreach (SelectListItem item in list)
+    {
+        string fullName = countryCodes.GetFullCountryName(item.Text);
+        item.Text += " - " + fullName;
+    }
 }
 <h1>@ViewData["Title"]</h1>
 @using (Html.BeginForm("GetTranslation", "Translate", FormMethod.Post))
 {
     <div class="translate-container">
         <div class="translate text-center">
-            <select name="source" id="dowList" class="dowList">
-                <option value="" selected disabled hidden>@Html.DisplayFor(model => model.source)</option>
-                @foreach (var item in response)
-                {
-                    string fullName = countryCodes.GetFullCountryName(item);
-                    <option value="@item">@item - @fullName</option>
-                }
-            </select>
+            <p>Translate from: </p>
+            @Html.DropDownListFor(m => m.source, list, new { @class = "dowList" })
             @using (Html.BeginForm("GetTranslation", "Translate", FormMethod.Post))
             {
                 @Html.TextAreaFor(model => model.text, new { Class = "textbox" })
                 <button type="submit" class="btn-translate">Translate!</button>
             }
-            </div>
+        </div>
         <div class="translate">
-            <select name="result" id="dowList" class="dowList">
-                <option value="" selected disabled hidden>@Html.DisplayFor(model => model.result)</option>
-                @foreach (var item in response)
-                {
-                    string fullName = countryCodes.GetFullCountryName(item);
-                    <option value="@item">@item - @fullName</option>
-                }
-            </select>
+            <p>Translate to: </p>
+            @Html.DropDownListFor(m => m.result, list, new { @class = "dowList" })
             @using (Html.BeginForm("GetTranslation", "Translate", FormMethod.Post))
             {
                 @Html.TextAreaFor(model => model.response, new { Class = "textbox" })
             }
-            </div>
+        </div>
     </div>
 }

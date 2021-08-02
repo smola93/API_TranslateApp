@@ -24,35 +24,42 @@ namespace API_TranslateApp.Controllers
         }
         
         [HttpPost]
-        public async Task<ActionResult> GetTranslation(TranslateModel model)
+        public async Task<ActionResult> GetTranslation(TranslateModel model, string source, string result)
         {
             CountryCodes countryCodes = new CountryCodes();
             string text = model.text;
-            model.source = Request.Form["source"].ToString();
-            string sourceCountry = countryCodes.GetFullCountryName(model.source);
-            model.result = Request.Form["result"].ToString();
-            string resultCountry = countryCodes.GetFullCountryName(model.result);
+            source = source.Split(" -")[0];
+            string sourceCountry = countryCodes.GetFullCountryName(source);
+            result = result.Split(" -")[0];
+            string resultCountry = countryCodes.GetFullCountryName(result);
             ApiController apiController = new ApiController();
-            model.response = await apiController.GetApiTranslation(text, model.result, model.source);
+            model.response = await apiController.GetApiTranslation(text, result, source);
             model.source += " - " + sourceCountry;
             model.result += " - " + resultCountry;
             return View("Translate", model);
         }
 
         [HttpPost]
-        public async Task<ActionResult> DetectAsync(TranslateModel model)
+        public async Task<ActionResult> Detect (TranslateModel model)
         {
-            CountryCodes countryCodes = new CountryCodes();
-            List<string> resultArray;
-            string text = model.text;
-            ApiController apiController = new ApiController();
-            resultArray = await apiController.DetectLanguage(text);
-            model.detectResult = "Detected language: " + countryCodes.GetFullCountryName(resultArray[0]) + ", Confidence: " + resultArray[1];
-            return View("Detect", model);
+            try
+            {
+                CountryCodes countryCodes = new CountryCodes();
+                List<string> resultArray;
+                string text = model.text;
+                ApiController apiController = new ApiController();
+                resultArray = await apiController.DetectLanguage(text);
+                model.detectResult = "Detected language: " + countryCodes.GetFullCountryName(resultArray[0]) + ", Confidence: " + resultArray[1];
+                return View("Detect", model);
+            }
+            catch (Exception)
+            {
+                return View("Error");
+            }
         }
 
         [HttpPost]
-        public async Task<ActionResult> PassDropdownValue(TranslateModel model, string command)
+        public ActionResult PassDropdownValue(TranslateModel model, string command)
         {
             CountryCodes countryCodes = new CountryCodes();
             string code = Request.Form["dowList"].ToString();

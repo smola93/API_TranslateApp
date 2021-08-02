@@ -17,9 +17,9 @@ namespace API_TranslateApp.Models
         public string detectResult { get; set; }
 
         public TranslateModel() 
-        { 
-            source = "Translate from...";
-            result = "Translate to...";
+        {
+                source = "Translate from...";
+                result = "Translate to...";
         }
     }
 }
