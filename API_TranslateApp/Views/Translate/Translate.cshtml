@@ -17,7 +17,7 @@
 {
     <div class="translate-container">
         <div class="translate text-center">
-            <p>Translate from: </p>
+            <p>Translate from:</p>
             @Html.DropDownListFor(m => m.source, list, new { @class = "dowList" })
             @using (Html.BeginForm("GetTranslation", "Translate", FormMethod.Post))
             {
@@ -26,7 +26,7 @@
             }
         </div>
         <div class="translate">
-            <p>Translate to: </p>
+            <p>Translate to:</p>
             @Html.DropDownListFor(m => m.result, list, new { @class = "dowList" })
             @using (Html.BeginForm("GetTranslation", "Translate", FormMethod.Post))
             {

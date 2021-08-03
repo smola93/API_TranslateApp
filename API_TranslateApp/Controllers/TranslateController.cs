@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace API_TranslateApp.Controllers
@@ -14,16 +12,17 @@ namespace API_TranslateApp.Controllers
         {
             return View(new TranslateModel());
         }
+
         public IActionResult Languages()
         {
-                return View();
-            
+            return View();
         }
+
         public IActionResult Detect()
         {
             return View();
         }
-        
+
         [HttpPost]
         public async Task<ActionResult> GetTranslation(TranslateModel model, string source, string result)
         {
@@ -50,7 +49,8 @@ namespace API_TranslateApp.Controllers
                 string text = model.text;
                 ApiController apiController = new ApiController();
                 resultArray = await apiController.DetectLanguage(text);
-                model.detectResult = "Detected language: " + countryCodes.GetFullCountryName(resultArray[0]) + ", Confidence: " + resultArray[1];
+                model.detectResult = "Detected language: " + countryCodes.GetFullCountryName(resultArray[0]) + 
+                    ", Confidence: " + resultArray[1];
                 return View("Detect", model);
             }
             catch (Exception)
@@ -75,6 +75,5 @@ namespace API_TranslateApp.Controllers
             }
             return View("Translate", model);
         }
-
     }
 }

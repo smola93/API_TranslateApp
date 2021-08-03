@@ -1,14 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Net.Security;
 using System.Threading.Tasks;
-using System.Diagnostics;
 using Newtonsoft.Json;
-using System.Collections.ObjectModel;
 
 namespace API_TranslateApp
 {
@@ -32,13 +26,11 @@ namespace API_TranslateApp
 
                 HttpResponseMessage response = await client.SendAsync(request);
                 response.EnsureSuccessStatusCode();
-                var content = await response.Content.ReadAsStringAsync();
-                Console.WriteLine(content);
-                AllLanguagesData result = JsonConvert.DeserializeObject<AllLanguagesData>(content);
+                var body = await response.Content.ReadAsStringAsync();
+                AllLanguagesData result = JsonConvert.DeserializeObject<AllLanguagesData>(body);
 
                 List<Language> listOfCountryCodesObj = result.languages.language;
                 List<string> listOfCountryCodes = new List<string>();
-
 
                 foreach (var item in listOfCountryCodesObj)
                 {
@@ -46,13 +38,11 @@ namespace API_TranslateApp
                 }
 
                 return listOfCountryCodes;
-
             }
             catch (Exception)
             {
                 throw;
             }
-
         }
 
         public async Task<string> GetApiTranslation(string message, string target, string source)
@@ -77,20 +67,19 @@ namespace API_TranslateApp
                 };
                 HttpResponseMessage response = await client.SendAsync(request);
                 response.EnsureSuccessStatusCode();
-                var content = await response.Content.ReadAsStringAsync();
-                Console.WriteLine(content);
-                TranslationData result = JsonConvert.DeserializeObject<TranslationData>(content);
+                var body = await response.Content.ReadAsStringAsync();
+                TranslationData result = JsonConvert.DeserializeObject<TranslationData>(body);
                 List<TranslatedText> translation = result.translations.translatedTexts;
-                content = translation[0].translatedText;
+                body = translation[0].translatedText;
 
-                return content;
+                return body;
             }
             catch (Exception ex)
             {
                 return "ops! something went wrong.\n"
                     + "Please be sure to use two different languages and have your message understandable.\n"
                     + ex.Message;
-                throw new Exception();
+                throw;
             }
         }
 
@@ -114,9 +103,8 @@ namespace API_TranslateApp
                 };
                 HttpResponseMessage response = await client.SendAsync(request);
                 response.EnsureSuccessStatusCode();
-                var content = await response.Content.ReadAsStringAsync();
-                Console.WriteLine(content);
-                DetectionData result = JsonConvert.DeserializeObject<DetectionData>(content);
+                var body = await response.Content.ReadAsStringAsync();
+                DetectionData result = JsonConvert.DeserializeObject<DetectionData>(body);
                 List<DetectionNodes> detectionNodes = result.detections.detectionList[0];
                 List<string> resultList = new List<string>();
                 resultList.Add(detectionNodes[0].language);
@@ -131,6 +119,7 @@ namespace API_TranslateApp
         }
     }
 
+    //Languages response
     public class AllLanguagesData
     {
         [JsonProperty("data")]
@@ -146,7 +135,7 @@ namespace API_TranslateApp
         [JsonProperty("language")]
         public string language { get; set; }
     }
-
+    //Translate response
     public class TranslationData
     {
         [JsonProperty("data")]
@@ -162,8 +151,7 @@ namespace API_TranslateApp
         [JsonProperty("translatedText")]
         public string translatedText { get; set; }
     }
-    
-    
+    //Detect response
     public class DetectionData
     {
         [JsonProperty("data")]
