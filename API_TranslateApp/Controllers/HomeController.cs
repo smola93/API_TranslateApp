@@ -33,6 +33,11 @@ namespace API_TranslateApp.Controllers
             return View();
         }
 
+        public IActionResult ProdError()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

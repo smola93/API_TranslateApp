@@ -1,14 +1,15 @@
-﻿
-@{
+﻿@{
     ApiController controller = new ApiController();
     CountryCodes countryCodes = new CountryCodes();
-    //List<string> response = await controller.GetAllLanguages();
-    //toDelete
-    string[] countries = { "pl", "en",
-                        "ru" };
-    List<string> response = new List<string>(); ;
-    response.AddRange(countries);
-    //toDelete
+    List<string> response;
+    try
+    {
+        response = await controller.GetAllLanguages();
+    }
+    catch (Exception)
+    {
+        throw;
+    }
 }
 
 <p>List of available languages:</p>

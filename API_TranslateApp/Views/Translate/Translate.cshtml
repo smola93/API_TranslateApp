@@ -3,11 +3,8 @@
     ViewData["Title"] = "Translate Using Google Translate API";
     ApiController controller = new ApiController();
     CountryCodes countryCodes = new CountryCodes();
-    //List<string> response = await controller.GetAllLanguages();
-    string[] countries = { "pl", "en",
-                        "ru" };
-    List<string> response = new List<string>();
-    response.AddRange(countries);
+    List<string> response = await controller.GetAllLanguages();
+
     SelectList list = new SelectList(response);
     foreach (SelectListItem item in list)
     {

@@ -16,7 +16,8 @@ namespace API_TranslateApp.Controllers
         }
         public IActionResult Languages()
         {
-            return View();
+                return View();
+            
         }
         public IActionResult Detect()
         {
@@ -40,7 +41,7 @@ namespace API_TranslateApp.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Detect (TranslateModel model)
+        public async Task<ActionResult> Detect(TranslateModel model)
         {
             try
             {
@@ -54,7 +55,7 @@ namespace API_TranslateApp.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return View("ProdError");
             }
         }
 

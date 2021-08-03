@@ -17,7 +17,6 @@ namespace API_TranslateApp
         private static readonly HttpClient client = new HttpClient();
         public async Task<List<string>> GetAllLanguages()
         {
-
             try
             {
                 var request = new HttpRequestMessage
@@ -49,11 +48,9 @@ namespace API_TranslateApp
                 return listOfCountryCodes;
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Console.WriteLine(ex.Message);
-                //TODO Exception handling
-                throw new Exception();
+                throw;
             }
 
         }
@@ -90,7 +87,9 @@ namespace API_TranslateApp
             }
             catch (Exception ex)
             {
-                return "ops! something went wrong.\n" + ex.Message;
+                return "ops! something went wrong.\n"
+                    + "Please be sure to use two different languages and have your message understandable.\n"
+                    + ex.Message;
                 throw new Exception();
             }
         }
