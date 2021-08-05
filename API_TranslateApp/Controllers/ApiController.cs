@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Microsoft.Extensions.Configuration;
 
 namespace API_TranslateApp
 {
     public class ApiController
     {
         private static readonly HttpClient client = new HttpClient();
+        string apiKey = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["x-rapidapi-key"];
         public async Task<List<string>> GetAllLanguages()
         {
             try
@@ -19,7 +21,7 @@ namespace API_TranslateApp
                     RequestUri = new Uri("https://gogle-translate1.p.rapidapi.com/language/translate/v2/languages"),
                     Headers =
     {
-        { "x-rapidapi-key", "f36cc37f00msh60980c9dd08911bp1635d4jsnbb12aedaf508" },
+        { "x-rapidapi-key", apiKey },
         { "x-rapidapi-host", "google-translate1.p.rapidapi.com" },
     },
                 };
@@ -55,7 +57,7 @@ namespace API_TranslateApp
                     RequestUri = new Uri("https://google-translate1.p.rapidapi.com/language/translate/v2"),
                     Headers =
     {
-        { "x-rapidapi-key", "f36cc37f00msh60980c9dd08911bp1635d4jsnbb12aedaf508" },
+        { "x-rapidapi-key", apiKey },
         { "x-rapidapi-host", "google-translate1.p.rapidapi.com" },
     },
                     Content = new FormUrlEncodedContent(new Dictionary<string, string>
@@ -93,7 +95,7 @@ namespace API_TranslateApp
                     RequestUri = new Uri("https://google-translate1.p.rapidapi.com/language/translate/v2/detect"),
                     Headers =
     {
-        { "x-rapidapi-key", "f36cc37f00msh60980c9dd08911bp1635d4jsnbb12aedaf508" },
+        { "x-rapidapi-key", apiKey },
         { "x-rapidapi-host", "google-translate1.p.rapidapi.com" },
     },
                     Content = new FormUrlEncodedContent(new Dictionary<string, string>

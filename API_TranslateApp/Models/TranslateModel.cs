@@ -7,11 +7,5 @@
         public string source { get; set; }
         public string result { get; set; }
         public string detectResult { get; set; }
-
-        public TranslateModel() 
-        {
-                source = "Translate from...";
-                result = "Translate to...";
-        }
     }
 }
